@@ -29,7 +29,7 @@ def move_boy(boy, hands):
     x2, y2 = hands[0][0], hands[0][1]
     if (boy[0] > hands[0][0]):
         boy_left = True
-    else:
+    else: 
         boy_left = False
     for i in range(0, 100 + 1, 5):
         clear_canvas()
