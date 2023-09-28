@@ -50,9 +50,16 @@ frame = 0
 hand_point = []
 click = False
 while running:
-    if click:
+    if len(hand_point):
         move_boy(boy_point, hand_point)
         pass
+    else:
+        clear_canvas()
+        TUK_ground.draw(TUK_WIDTH // 2, TUK_HEIGHT // 2)
+        character.clip_draw(frame * 100, 100 * 1, 100, 100, boy_point[0], boy_point[1])
+        update_canvas()
+        frame = (frame + 1) % 8
+        delay(0.05)
     handle_events()
 close_canvas()
 
