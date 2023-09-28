@@ -9,12 +9,15 @@ hand = load_image('hand_arrow.png')
 
 def handle_events():
     global running
-    global x, y
+    global hand_point
+    global click
     events = get_events()
     for event in events:
         if event.type == SDL_QUIT:
             running = False
-        elif event.type == SDL_KEYDOWN and event.key == SDLK_LEFT:
+        elif event.type == SDL_MOUSEBUTTONDOWN and event.button == SDL_BUTTON_LEFT:
+            hand_point.append([event.x, TUK_HEIGHT - 1 -event.y])
+            click = True
             pass
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             running = False
@@ -27,10 +30,13 @@ def move_boy(boy, hands):
 running = True
 boy_point = [TUK_WIDTH // 2, TUK_HEIGHT // 2]
 frame = 0
-
-
+hand_point = []
+click = False
 while running:
-    pass
+    if click:
+        hand.draw(hand_point[0][0], hand_point[0][0],100,100)
+        update_canvas()
+        pass
     handle_events()
 close_canvas()
 
