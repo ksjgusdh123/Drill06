@@ -17,7 +17,6 @@ def handle_events():
             running = False
         elif event.type == SDL_MOUSEBUTTONDOWN and event.button == SDL_BUTTON_LEFT:
             hand_point.append([event.x, TUK_HEIGHT - 1 - event.y])
-            click = True
             pass
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             running = False
@@ -25,7 +24,6 @@ def handle_events():
 
 def move_boy(boy, hands):
     global frame
-    global click
     x1, y1 = boy[0], boy[1]
     x2, y2 = hands[0][0], hands[0][1]
 
@@ -37,12 +35,14 @@ def move_boy(boy, hands):
         t = i / 100
         boy_point[0] = (1 - t) * x1 + t * x2
         boy_point[1] = (1 - t) * y1 + t * y2
-        hand.draw(hand_point[0][0], hand_point[0][1])
-        update_canvas()
+        for i in range (len(hand_point)):
+            hand.draw(hand_point[i][0], hand_point[i][1])
+            update_canvas()
         frame = (frame + 1) % 8
         delay(0.05)
+        handle_events()
+
     hands.remove(hands[0])
-    click = False
 
 running = True
 boy_point = [TUK_WIDTH // 2, TUK_HEIGHT // 2]
@@ -52,7 +52,6 @@ click = False
 while running:
     if len(hand_point):
         move_boy(boy_point, hand_point)
-        pass
     else:
         clear_canvas()
         TUK_ground.draw(TUK_WIDTH // 2, TUK_HEIGHT // 2)
